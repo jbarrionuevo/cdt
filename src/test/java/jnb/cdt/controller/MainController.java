@@ -1,18 +1,10 @@
 package jnb.cdt.controller;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
-import org.mongodb.morphia.query.Query;
-
 import com.mongodb.MongoClient;
-
 import jnb.cdt.dao.CountryDAO;
 import jnb.cdt.model.Country;
-import jnb.cdt.model.CountryImpl;
 
 public class MainController {
 
@@ -22,20 +14,23 @@ public class MainController {
 	public static void main(String[] args) {
 		final Morphia morphia = new Morphia();
 		morphia.mapPackage("jnb.cdt.model");				
-		
 		CountryDAO countryDAO = new CountryDAO(morphia, new MongoClient());
 
 		ObjectId id = new ObjectId("574883cbd15c296d7022f1f5");
-		//ObjectId  countryEntryId = countryEntryDAO.get(id);
-		Country CountryEntry = countryDAO.get(id);
 
-		System.out.println("Using DAO " + CountryEntry.getName());
+
+		//get
+		Country countryEntry = countryDAO.get(id);
+		System.out.println("Using DAO " + countryEntry.getName());
+
+		//update
+		countryEntry.setDescription("40 million inhabitants.");
+		countryDAO.save(countryEntry);
+
+		//delete
+		ObjectId id1 = new ObjectId("57487f3cd15c29a738edde68");
+		String deleteResult = countryDAO.deleteById(id1).toString();
 		
-		// update it
-		//myBlogEntry.setTitle("My Blog Entry");
-		//blogEntryDAO.save(myBlogEntry);
-
-		// or just delete it
-		//blogEntryDAO.deleteById(myBlogEntry.getId());
+		System.out.println(deleteResult);
 	}
 }

@@ -10,6 +10,7 @@ public abstract class Country {
 	@Id
     private ObjectId id;
 	public String name;
+	public String description;
 	
 	public Country() {
 		// TODO Auto-generated constructor stub
@@ -27,6 +28,14 @@ public abstract class Country {
 	public String getName() {
 		return name;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}	
 	
 //	@Entity("employees")
 //	@Indexes(
